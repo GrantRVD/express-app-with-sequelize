@@ -1,6 +1,7 @@
-extends layout
-
-block content
+doctype html
+html(lange='en')
+  include common/head.pug
+  +head("Starter MVP")
   h1= title
   p Welcome to #{title}
   form(action="/", method="POST")
@@ -16,6 +17,6 @@ block content
         | 
         button(onclick=`deleteLead('${lead.id}')`) Delete
 
-  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  include common/footer.pug
+  +footer()
   script(src='/javascripts/leads.js')
-
