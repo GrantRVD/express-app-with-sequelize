@@ -15,10 +15,27 @@ html(lange='en')
                 .col-sm-12.col-md-12
                   form(action='/signup', method='POST')
                     .formgroup
-                      label.small.mb-1.mt-3 Email:
-                      input(placeholder='Please enter your email address', required=true, name='email', type='email', value='').form-control
-                      label.small.mb-1.mt-3 Password:
-                      input(placeholder='Please enter a password', required=true, name='password', type='password', value='').form-control
+                      table.container
+                        thead.text-center
+                          tr
+                            th(scope='col')
+                              label.small.mb-1.mt-3 Email
+                            th(scope='col')
+                              label.small.mb-1.mt-3 Password
+                        tbody
+                          tr
+                            td
+                              input(placeholder='Please enter your email address', required=true, name='email', type='email', value=formData.email).form-control
+                              
+                            td
+                              input(placeholder='Please enter a password', required=true, name='password', type='password', value=formData.password).form-control
+                          tr
+                            td
+                              if (errors && errors.email)
+                                p.small.text-danger #{errors.email}
+                            td
+                              if (errors && errors.password)
+                                p.small.text-danger #{errors.password}
                       button.mt-3.btn.btn-primary(type='submit') Sign Up
                       p.mt-2.mb-0
                         |  Already have an account? #[a(href='/login') Login Page]
