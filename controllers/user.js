@@ -29,17 +29,25 @@ exports.signup = function(req, res, next) {
         if (!isEmpty(errors)) {
             rerender_signup(errors, req, res, next);
         } else { 
-            const newUser = models.User.build({
-                email: req.body.email,
-                password: generateHash(req.body.password)
-            });
+            return models.User.findOne({
+                where: {
+                    is_admin: true
+                }
+            }).then(user => {
+                const newUser = models.User.build({
+                    email: req.body.email,
+                    password: generateHash(req.body.password),
+                    is_admin: user === null
+                });
 
-            return newUser.save().then(result => {
-                passport.authenticate('local', {
-                    successRedirect: '/',
-                    failureRedirect: '/signup',
-                    failureFlash: true
-                })(req, res, next);
+                return newUser.save().then(result => {
+                    passport.authenticate('local', {
+                        successRedirect: '/',
+                        failureRedirect: '/signup',
+                        failureFlash: true
+                    })(req, res, next);
+            })
+
             })
         }
     })
